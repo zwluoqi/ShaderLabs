@@ -7,7 +7,7 @@
 //MatCap基于它的效果，很多使用用来低成本的实现车漆，卡通渲染头发的“天使环（angel ring）”等相关效果
 */
 
-Shader "Qingzhu/URP/Lighting/PBR_Matcap"
+Shader "Qingzhu/URP/Lighting/PBR_MatcapDepthRim"
 {
     Properties
     {
@@ -23,10 +23,14 @@ Shader "Qingzhu/URP/Lighting/PBR_Matcap"
 
 		_MatCapTexture("MatCapTexture",2D) = "black" {}
 
-        _FresnelAmplitude("FresnelAmplitude",float) = 1
-        _FresnelPow("FresnelPow",float) = 1
-        _FresnelColor("FresnelColor",Color) = (1,1,1,1)
 
+		_RimColor("RimColor",color) = (1,1,1,1)
+
+		//Depth Rim
+		_Spread("Spread",Range(0,200))= 1
+		_Width("Width",float)= 1
+		_MinDis("MinDis",Range(0,1))= 0
+		_MaxDis("MaxDis",Range(0,1))= 1
     }
     SubShader
     {
@@ -54,15 +58,17 @@ Shader "Qingzhu/URP/Lighting/PBR_Matcap"
             sampler2D _MaskTexture;
             
             
-            CBUFFER_START(UnityPerMaterial)            
-            half3 _MinnaertColor;
-            half _MinnaertRoughness;
-            half _FresnelAmplitude;
-            half _FresnelPow;
-            half3 _FresnelColor;
+            CBUFFER_START(UnityPerMaterial)   
+
+            half3 _RimColor;
+            
             half _Smoothness;
             half _MetallicAmplitude;
 
+            half _Width;
+            half _MinDis;
+            half _MaxDis;
+            half _Spread;
             CBUFFER_END
 
             //一般用来模拟月亮的光照
@@ -104,7 +110,22 @@ Shader "Qingzhu/URP/Lighting/PBR_Matcap"
                 return OUT;
             }
 
-
+            half edgeDisCal(Varyings IN)
+            {
+	            
+            	half4 spos = IN.screenPS;
+            	half2 suv = spos.xy/spos.w;
+            	// return  spos.w;
+            	half3 vNor = mul(UNITY_MATRIX_V,float4(normalize(IN.normalWS),0));
+            	suv += vNor.xy*_Width*half2(_ScreenParams.z-1,_ScreenParams.w-1);//offset
+            	half dd = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, suv.xy);
+            	half depth = LinearEyeDepth(dd,_ZBufferParams);
+            	// return depth;
+            	half dis = saturate((depth-spos.w)/max(1,_Spread));
+            	// return dis;
+            	half rim = smoothstep(_MinDis,_MaxDis,dis);
+            	return rim;
+            }
 
             half4 frag(Varyings IN) : SV_Target
             {
@@ -121,12 +142,9 @@ Shader "Qingzhu/URP/Lighting/PBR_Matcap"
 
                 InputData inputData;
                 BuildInputData(IN, tangentNormalDir, inputData);
-                half3 normalWS = normalize(IN.normalWS);
-                half3 viewWS = SafeNormalize(IN.viewDirWS);
 
-                half3 fresnelValue = maskColor.b*fresnel(normalWS,viewWS,_FresnelAmplitude,_FresnelPow)*_FresnelColor;
-
-
+            	half3 fresnelValue = edgeDisCal(IN)*_RimColor;
+				
                 
             	half3 normalVS = TransformWorldToViewDir(IN.normalWS,true);
             	normalVS = normalVS*0.5+0.5f;

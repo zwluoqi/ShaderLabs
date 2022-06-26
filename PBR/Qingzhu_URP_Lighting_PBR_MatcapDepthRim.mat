@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Qingzhu_URP_Lighting_PBR_Matcap
-  m_Shader: {fileID: 4800000, guid: ab0d9b65fb7c4f6b82a64cca38ec2165, type: 3}
+  m_Name: Qingzhu_URP_Lighting_PBR_MatcapDepthRim
+  m_Shader: {fileID: 4800000, guid: 55f66c01b26bb477c927e1da2ba6d6a4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -57,8 +57,9 @@ Material:
     - _Roughness: 1
     - _Smoothness: 0.5
     - _Spread: 49
-    - _Width: 1.48
+    - _Width: 4.41
     m_Colors:
     - _FresnelColor: {r: 1, g: 0.3915094, b: 0.3915094, a: 1}
     - _MinnaertColor: {r: 0, g: 1, b: 0.35742378, a: 1}
+    - _RimColor: {r: 0.69298244, g: 1, b: 0.023584902, a: 1}
   m_BuildTextureStacks: []

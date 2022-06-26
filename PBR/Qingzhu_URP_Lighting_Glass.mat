@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Qingzhu_URP_Lighting_PBR_Matcap
-  m_Shader: {fileID: 4800000, guid: ab0d9b65fb7c4f6b82a64cca38ec2165, type: 3}
+  m_Name: Qingzhu_URP_Lighting_Glass
+  m_Shader: {fileID: 4800000, guid: 789ccd149a34a4df4b6874db22321469, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -24,19 +24,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 71a66016291db40d0bd8a71f6c0a7d73, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTexture:
-        m_Texture: {fileID: 2800000, guid: 84b9af61ae5a0497eadf8459caccdecc, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCapTexture:
-        m_Texture: {fileID: 2800000, guid: 8c046973067a249fbaae561c347b1996, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicTex:
-        m_Texture: {fileID: 2800000, guid: 89314e08a4af84c459ddb8a580a0f80d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
@@ -44,21 +44,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RoughnessTex:
-        m_Texture: {fileID: 2800000, guid: 1766f289931534342b4d4b913b6f9005, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FresnelAmplitude: 6.14
-    - _FresnelPow: 8
+    - _FresnelAmplitude: 1
+    - _FresnelPow: 1
     - _MaxDis: 1
-    - _MetallicAmplitude: 1
-    - _MinDis: 0.1
-    - _MinnaertRoughness: 2
-    - _Roughness: 1
+    - _MetallicAmplitude: 0.5
+    - _MinDis: 0
+    - _RefractAmount: 0.836
     - _Smoothness: 0.5
-    - _Spread: 49
-    - _Width: 1.48
+    - _Spread: 1
+    - _StartDis: 1
+    - _Width: 29.8
     m_Colors:
-    - _FresnelColor: {r: 1, g: 0.3915094, b: 0.3915094, a: 1}
-    - _MinnaertColor: {r: 0, g: 1, b: 0.35742378, a: 1}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
